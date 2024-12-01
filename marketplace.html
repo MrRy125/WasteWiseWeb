@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WasteWiseWeb - Community Waste Management Marketplace</title>
+    <link rel="icon" type="image/x-icon" href="web.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&family=Roboto+Slab&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
@@ -76,6 +77,12 @@
 
         .nav-links a:hover {
             color: var(--accent);
+        }
+
+        .nav-links .active {
+            color: var(--accent);
+            font-weight: bold;
+            border-bottom: 3px solid var(--accent);
         }
 
         /* Main Content */
@@ -269,20 +276,152 @@
             }
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--background);
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .modal-close {
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .modal-body {
+            display: flex;
+            padding: 1.5rem;
+        }
+
+        .modal-image {
+            flex: 1;
+            margin-right: 1.5rem;
+        }
+
+        .modal-image img {
+            max-width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-details {
+            flex: 2;
+        }
+
+        .modal-details h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-details .price {
+            font-size: 1.25rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .modal-details .description {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .modal-details .seller-info {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: #f4f4f4;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .modal-footer .btn {
+            flex-grow: 1;
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .modal-body {
+                flex-direction: column;
+            }
+
+            .modal-image {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+            }
+
+            .modal-footer .btn {
+                margin: 0.5rem 0;
+            }
+        }
+
     </style>
 </head>
 <body>
     <header>
         <nav class="container">
-            <div class="logo">WasteWiseWeb</div>
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: #f4f4f4;">WasteWiseWeb</a></div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="educational-hub.html">Learn</a></li>
                 <li><a href="scheduling.html">Events</a></li>
                 <li><a href="monitoring.html">Dashboard</a></li>
                 <li><a href="reporting.html">Report</a></li>
-                <li><a href="attendance.html">Attendance</a></li>
-                <li><a href="marketplace.html">Store</a></li>
+                <!-- <li><a href="attendance.html">Attendance</a></li> -->
+                <li><a href="marketplace.html" class="active">Store</a></li>
                 <li><a href="account.html">Sign In</a></li>
             </ul>
 
@@ -293,7 +432,7 @@
                 <a href="scheduling.html">Events</a>
                 <a href="monitoring.html">Dashboard</a>
                 <a href="reporting.html">Report</a>
-                <a href="attendance.html">Attendance</a>
+                <!-- <a href="attendance.html">Attendance</a> -->
                 <a href="marketplace.html">Store</a>
                 <a href="account.html">Sign In</a>
                 <!-- Add other navigation links here -->
@@ -346,14 +485,49 @@
         </div>
     </main>
 
+    <!-- Product Details Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalProductTitle">Product Details</h2>
+                <button class="modal-close" onclick="closeProductModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalProductImage" src="" alt="Product Image">
+                </div>
+                <div class="modal-details">
+                    <h3 id="modalProductCategory">Category</h3>
+                    <div class="price" id="modalProductPrice">₱0.00</div>
+                    <div class="description" id="modalProductDescription">Product description goes here.</div>
+                    <div class="seller-info">
+                        <strong>Seller:</strong> <span id="modalProductSeller">Seller Name</span><br>
+                        <strong>Rating:</strong> 
+                        <span id="modalProductRating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn">Add to Cart</a>
+                <a href="#" class="btn">Buy Now</a>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <p>&copy; 2024 WasteWiseWeb. All rights reserved.</p>
             <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/"><i class="fab fa-linkedin"></i></a>
             </div>
         </div>
     </footer>
@@ -362,15 +536,57 @@
         document.addEventListener('DOMContentLoaded', function() {
             const productList = document.getElementById('productList');
             const products = [
-                { title: 'Recycled Paper Notebook', price: 15.99, seller: 'EcoStore', category: 'Recycled Crafts', img: 'Recycled Paper Notebook.jpg' },
-                { title: 'Bamboo Toothbrush Set', price: 12.99, seller: 'GreenLiving', category: 'Eco-friendly Products', img: 'Bamboo Toothbrush Set.jpg' },
-                { title: 'Upcycled Tire Planter', price: 29.99, seller: 'UrbanGarden', category: 'Upcycled Furniture', img: 'Upcycled Tire Planter.jpg' },
-                { title: 'Reusable Produce Bags', price: 9.99, seller: 'ZeroWaste', category: 'Waste Management Supplies', img: 'Reusable Produce Bags.jpg' },
-                { title: 'Solar-powered Lantern', price: 34.99, seller: 'EcoTech', category: 'Eco-friendly Products', img: 'Solar-powered Lantern.jpg' },
-                { title: 'Recycled Plastic Outdoor Rug', price: 79.99, seller: 'GreenHome', category: 'Recycled Crafts', img: 'Recycled Plastic Outdoor Rug.jpg' }
+                { 
+                    title: 'Recycled Paper Notebook', 
+                    price: 15.99, 
+                    seller: 'EcoStore', 
+                    category: 'Recycled Crafts', 
+                    img: 'Recycled Paper Notebook.jpg',
+                    description: 'An eco-friendly notebook made from 100% recycled paper. Perfect for environmentally conscious students and professionals.'
+                },
+                { 
+                    title: 'Bamboo Toothbrush Set', 
+                    price: 12.99, 
+                    seller: 'GreenLiving', 
+                    category: 'Eco-friendly Products', 
+                    img: 'Bamboo Toothbrush Set.jpg',
+                    description: 'A sustainable alternative to plastic toothbrushes. Made from biodegradable bamboo with soft bristles.'
+                },
+                { 
+                    title: 'Upcycled Tire Planter', 
+                    price: 29.99, 
+                    seller: 'UrbanGarden', 
+                    category: 'Upcycled Furniture', 
+                    img: 'Upcycled Tire Planter.jpg',
+                    description: 'Transform waste into beauty with this creative planter made from recycled tires. Perfect for your garden or balcony.'
+                },
+                { 
+                    title: 'Reusable Produce Bags', 
+                    price: 9.99, 
+                    seller: 'ZeroWaste', 
+                    category: 'Waste Management Supplies', 
+                    img: 'Reusable Produce Bags.jpg',
+                    description: 'Lightweight and durable mesh bags for grocery shopping. Reduce single-use plastic waste with these versatile produce bags.'
+                },
+                { 
+                    title: 'Solar-powered Lantern', 
+                    price: 34.99, 
+                    seller: 'EcoTech', 
+                    category: 'Eco-friendly Products', 
+                    img: 'Solar-powered Lantern.jpg',
+                    description: 'Portable solar lantern for camping, emergencies, or outdoor lighting. Charges during the day, illuminates at night.'
+                },
+                { 
+                    title: 'Recycled Plastic Outdoor Rug', 
+                    price: 79.99, 
+                    seller: 'GreenHome', 
+                    category: 'Recycled Crafts', 
+                    img: 'Recycled Plastic Outdoor Rug.jpg',
+                    description: 'Stylish outdoor rug made entirely from recycled plastic bottles. Durable, weather-resistant, and environmentally friendly.'
+                }
             ];
 
-            products.forEach(product => {
+            products.forEach((product, index) => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
                 productCard.innerHTML = `
@@ -381,16 +597,44 @@
                         <div class="product-title">${product.title}</div>
                         <div class="product-price">₱${product.price.toFixed(2)}</div>
                         <div class="product-seller">${product.seller}</div>
-                        <a href="#" class="btn">View Details</a>
+                        <a href="#" class="btn" onclick="openProductModal(${index})">View Details</a>
                     </div>
                 `;
                 productList.appendChild(productCard);
             });
+
+            window.openProductModal = function(index) {
+                const product = products[index];
+                const modal = document.getElementById('productModal');
+                
+                document.getElementById('modalProductTitle').textContent = product.title;
+                document.getElementById('modalProductImage').src = product.img;
+                document.getElementById('modalProductCategory').textContent = product.category;
+                document.getElementById('modalProductPrice').textContent = `₱${product.price.toFixed(2)}`;
+                document.getElementById('modalProductDescription').textContent = product.description;
+                document.getElementById('modalProductSeller').textContent = product.seller;
+                
+                modal.style.display = 'flex';
+            }
+
+            window.closeProductModal = function() {
+                const modal = document.getElementById('productModal');
+                modal.style.display = 'none';
+            }
+
+            // Close modal when clicking outside of it
+            window.onclick = function(event) {
+                const modal = document.getElementById('productModal');
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
         });
 
+        // Existing openNav and closeNav functions remain the same
         function openNav() {
-        document.getElementById("mySidebar").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
         }
 
         function closeNav() {

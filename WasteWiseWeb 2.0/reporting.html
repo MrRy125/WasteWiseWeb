@@ -79,12 +79,6 @@
             color: var(--accent);
         }
 
-        .nav-links .active {
-            color: var(--accent);
-            font-weight: bold;
-            border-bottom: 3px solid var(--accent);
-        }
-
         /* Main Content */
         main {
             padding: 4rem 0;
@@ -262,7 +256,7 @@
                 <li><a href="educational-hub.html">Learn</a></li>
                 <li><a href="scheduling.html">Events</a></li>
                 <li><a href="monitoring.html">Dashboard</a></li>
-                <li><a href="reporting.html" class="active">Report</a></li>
+                <li><a href="reporting.html">Report</a></li>
                 <!-- <li><a href="attendance.html">Attendance</a></li> -->
                 <li><a href="marketplace.html">Store</a></li>
                 <li><a href="account.html">Sign In</a></li>
@@ -295,8 +289,9 @@
                             <label for="reportType">Report Type:</label>
                             <select id="reportType" name="reportType" required>
                                 <option value="">Select report type</option>
-                                <option value="Emergency Pickup">Emergency Pickup</option>
-                                <option value="Improper Waste Management">Improper Waste Management</option>
+                                <option value="emergency">Emergency Pickup</option>
+                                <option value="improper">Improper Waste Management</option>
+                                <option value="other">Other</option>
                             </select>
                         </div>
                         <div>
@@ -363,8 +358,8 @@
                 reportItem.className = 'report-item';
                 reportItem.innerHTML = `
                     <strong>Type:</strong> ${reportType}<br>
-                    <strong>Description:</strong> <br>${description}<br>
-                    <strong>Location:</strong> <br>${location}<br>
+                    <strong>Description:</strong> ${description}<br>
+                    <strong>Location:</strong> ${location}<br>
                     <strong>Status:</strong> Pending
                 `;
 

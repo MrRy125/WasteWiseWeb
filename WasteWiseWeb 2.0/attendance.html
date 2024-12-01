@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WasteWiseWeb - Community Monitoring</title>
+    <title>WasteWiseWeb - Community Waste Management Attendance</title>
     <link rel="icon" type="image/x-icon" href="web.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&family=Roboto+Slab&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <style>
         :root {
             --primary: #4CAF50;
@@ -80,99 +79,89 @@
             color: var(--accent);
         }
 
-        .nav-links .active {
-            color: var(--accent);
-            font-weight: bold;
-            border-bottom: 3px solid var(--accent);
-        }
-
         /* Main Content */
         main {
-            padding: 2rem 0;
+            padding: 4rem 0;
         }
 
         h1 {
             text-align: center;
             margin-bottom: 2rem;
+            color: var(--primary);
         }
 
-        /* Dashboard Grid */
-        /* Dashboard Grid */
-        .dashboard-grid {
+        .attendance-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
-        .dashboard-grid .dashboard-card:first-child {
-            grid-column: span 4; /* Make the first card (key statistics) span all 4 columns */
-        }
-
-        .dashboard-grid .dashboard-card:nth-child(2),
-        .dashboard-grid .dashboard-card:nth-child(3),
-        .dashboard-grid .dashboard-card:nth-child(4),
-        .dashboard-grid .dashboard-card:nth-child(5) {
-            grid-column: span 2; /* Make the first card (key statistics) span all 4 columns */
-        }
-
-        .dashboard-card {
-            background-color: #f9f9f9;
+        .calendar-section, .contribution-section, .leaderboard-section {
+            background-color: #f4f4f4;
+            padding: 2rem;
             border-radius: 10px;
-            padding: 1.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .dashboard-card h2 {
+        h2 {
             margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        /* Charts */
-        .chart-container {
-            position: relative;
-            height: 300px;
-        }
-
-        /* Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-        }
-
-        .stat-item {
-            background-color: white;
-            border-radius: 5px;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
             color: var(--secondary);
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
+        /* Calendar Styles */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
         }
 
-        /* Carbon Footprint Tracker */
-        .carbon-footprint-tracker {
+        .calendar-day {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 10px;
             text-align: center;
         }
 
-        .carbon-value {
-            font-size: 3rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin: 1rem 0;
+        .calendar-day.pickup {
+            background-color: var(--success);
+            color: white;
         }
 
-        .carbon-label {
-            font-size: 1.2rem;
-            color: #666;
+        /* Contribution Tracker Styles */
+        .contribution-bar {
+            background-color: #ddd;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .contribution-progress {
+            background-color: var(--success);
+            height: 100%;
+            width: 0;
+            transition: width 0.5s ease-in-out;
+        }
+
+        /* Leaderboard Styles */
+        .leaderboard-list {
+            list-style-type: none;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .leaderboard-rank {
+            font-weight: bold;
+            margin-right: 10px;
         }
 
         /* Footer */
@@ -181,7 +170,6 @@
             color: white;
             padding: 2rem 0;
             text-align: center;
-            margin-top: 2rem;
         }
 
         .social-links {
@@ -205,7 +193,7 @@
                 display: none;
             }
 
-            .stats-grid {
+            .attendance-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -267,11 +255,11 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="educational-hub.html">Learn</a></li>
                 <li><a href="scheduling.html">Events</a></li>
-                <li><a href="monitoring.html" class="active">Dashboard</a></li>
+                <li><a href="monitoring.html">Dashboard</a></li>
                 <li><a href="reporting.html">Report</a></li>
                 <!-- <li><a href="attendance.html">Attendance</a></li> -->
                 <li><a href="marketplace.html">Store</a></li>
-                <li><a href="account.html">Sign In</a></li>
+                <li><a href="account.html">Sign In</a></li><li>
             </ul>
 
             <div id="mySidebar" class="responsive-sidebar">
@@ -290,58 +278,32 @@
         </nav>
     </header>
 
-    <main class="container">
-        <h1>Community Monitoring Dashboard</h1>
-
-        <div class="dashboard-grid">
-            <div class="dashboard-card">
-                <h2>Key Statistics</h2>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-value">1,250 kg</div>
-                        <div class="stat-label">Total Waste Collected This Month</div>
+    <main>
+        <div class="container">
+            <h1>Community Waste Management Attendance</h1>
+            <div class="attendance-grid">
+                <section class="calendar-section">
+                    <h2>Pickup Calendar</h2>
+                    <div id="calendar" class="calendar">
+                        <!-- Calendar days will be added here dynamically -->
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value">85%</div>
-                        <div class="stat-label">Recycling Rate</div>
+                </section>
+
+                <section class="contribution-section">
+                    <h2>Your Contribution</h2>
+                    <p>Total Contributions: <span id="totalContributions">0</span> kg</p>
+                    <p>Monthly Goal: 100 kg</p>
+                    <div class="contribution-bar">
+                        <div id="contributionProgress" class="contribution-progress"></div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value">320</div>
-                        <div class="stat-label">Active Participants</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">12</div>
-                        <div class="stat-label">Community Events This Month</div>
-                    </div>
-                </div>
-            </div>
+                </section>
 
-            <div class="dashboard-card carbon-footprint-tracker">
-                <h2>Community Carbon Footprint</h2>
-                <div class="carbon-value">-2.5 tons</div>
-                <div class="carbon-label">CO2 Equivalent Reduced This Month</div>
-                <p>Great job! Our community efforts have reduced our carbon footprint.</p>
-            </div>
-
-            <div class="dashboard-card">
-                <h2>Waste Collection Trends</h2>
-                <div class="chart-container">
-                    <canvas id="wasteCollectionChart"></canvas>
-                </div>
-            </div>
-
-            <div class="dashboard-card">
-                <h2>Community Participation</h2>
-                <div class="chart-container">
-                    <canvas id="participationChart"></canvas>
-                </div>
-            </div>
-
-            <div class="dashboard-card">
-                <h2>Waste Composition</h2>
-                <div class="chart-container">
-                    <canvas id="wasteCompositionChart"></canvas>
-                </div>
+                <section class="leaderboard-section">
+                    <h2>Top Contributors</h2>
+                    <ul id="leaderboard" class="leaderboard-list">
+                        <!-- Leaderboard items will be added here dynamically -->
+                    </ul>
+                </section>
             </div>
         </div>
     </main>
@@ -359,65 +321,51 @@
     </footer>
 
     <script>
-        // Waste Collection Trends Chart
-        const wasteCollectionCtx = document.getElementById('wasteCollectionChart').getContext('2d');
-        new Chart(wasteCollectionCtx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Waste Collected (kg)',
-                    data: [1000, 1200, 980, 1400, 1250, 1500],
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate calendar
+            const calendar = document.getElementById('calendar');
+            const today = new Date();
+            const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
 
-        // Community Participation Chart
-        const participationCtx = document.getElementById('participationChart').getContext('2d');
-        new Chart(participationCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                datasets: [{
-                    label: 'Participants',
-                    data: [250, 300, 280, 320],
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
+            for (let i = 1; i <= daysInMonth; i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day';
+                day.textContent = i;
+                
+                // Mark pickup days (e.g., every Monday and Thursday)
+                const date = new Date(today.getFullYear(), today.getMonth(), i);
+                if (date.getDay() === 1 || date.getDay() === 4) {
+                    day.classList.add('pickup');
+                }
+                
+                calendar.appendChild(day);
             }
-        });
 
-        // Waste Composition Chart
-        const wasteCompositionCtx = document.getElementById('wasteCompositionChart').getContext('2d');
-        new Chart(wasteCompositionCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Organic', 'Plastic', 'Paper', 'Glass', 'Metal', 'Other'],
-                datasets: [{
-                    data: [30, 25, 20, 10, 10, 5],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(255, 159, 64, 0.8)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
+            // Update contribution progress
+            const totalContributions = 75; // This would come from user data
+            document.getElementById('totalContributions').textContent = totalContributions;
+            const progressPercentage = (totalContributions / 100) * 100;
+            document.getElementById('contributionProgress').style.width = `${progressPercentage}%`;
+
+            // Generate leaderboard
+            const leaderboard = document.getElementById('leaderboard');
+            const leaderboardData = [
+                { name: 'John Doe', contributions: 120 },
+                { name: 'Jane Smith', contributions: 115 },
+                { name: 'Bob Johnson', contributions: 105 },
+                { name: 'Alice Brown', contributions: 95 },
+                { name: 'Charlie Davis', contributions: 90 }
+            ];
+
+            leaderboardData.forEach((user, index) => {
+                const li = document.createElement('li');
+                li.className = 'leaderboard-item';
+                li.innerHTML = `
+                    <span><span class="leaderboard-rank">#${index + 1}</span> ${user.name}</span>
+                    <span>${user.contributions} kg</span>
+                `;
+                leaderboard.appendChild(li);
+            });
         });
 
         function openNav() {

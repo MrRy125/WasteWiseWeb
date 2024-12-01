@@ -79,12 +79,6 @@
             color: var(--accent);
         }
 
-        .nav-links .active {
-            color: var(--accent);
-            font-weight: bold;
-            border-bottom: 3px solid var(--accent);
-        }
-
         /* Main Content */
         main {
             padding: 2rem 0;
@@ -335,7 +329,7 @@
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="educational-hub.html">Learn</a></li>
-                <li><a href="scheduling.html" class="active">Events</a></li>
+                <li><a href="scheduling.html">Events</a></li>
                 <li><a href="monitoring.html">Dashboard</a></li>
                 <li><a href="reporting.html">Report</a></li>
                 <!-- <li><a href="attendance.html">Attendance</a></li> -->
@@ -415,7 +409,6 @@ const calendarGrid = document.getElementById('calendar-grid');
 const currentMonthElement = document.getElementById('current-month');
 const prevMonthButton = document.getElementById('prev-month');
 const nextMonthButton = document.getElementById('next-month');
-const eventDate = document.getElementsByClassName('event-date');
 
 let currentDate = new Date();
 
@@ -436,9 +429,6 @@ function generateCalendar(year, month) {
     const daysInMonth = lastDay.getDate();
 
     currentMonthElement.textContent = `${firstDay.toLocaleString('default', { month: 'long' })} ${year}`;
-    eventDate[0].textContent = `September 15, ${year}` ;
-    eventDate[1].textContent = `September 22, ${year}` ;
-    eventDate[2].textContent = `October 2, ${year}` ;
 
     // Add empty divs for days before the start of the month
     for (let i = 0; i < firstDay.getDay(); i++) {

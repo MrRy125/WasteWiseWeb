@@ -80,12 +80,6 @@
             color: var(--accent);
         }
 
-        .nav-links .active {
-            color: var(--accent);
-            font-weight: bold;
-            border-bottom: 3px solid var(--accent);
-        }
-
         /* Main Content */
         main {
             padding: 2rem 0;
@@ -97,22 +91,10 @@
         }
 
         /* Dashboard Grid */
-        /* Dashboard Grid */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-        }
-
-        .dashboard-grid .dashboard-card:first-child {
-            grid-column: span 4; /* Make the first card (key statistics) span all 4 columns */
-        }
-
-        .dashboard-grid .dashboard-card:nth-child(2),
-        .dashboard-grid .dashboard-card:nth-child(3),
-        .dashboard-grid .dashboard-card:nth-child(4),
-        .dashboard-grid .dashboard-card:nth-child(5) {
-            grid-column: span 2; /* Make the first card (key statistics) span all 4 columns */
         }
 
         .dashboard-card {
@@ -136,7 +118,7 @@
         /* Stats */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
         }
 
@@ -267,7 +249,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="educational-hub.html">Learn</a></li>
                 <li><a href="scheduling.html">Events</a></li>
-                <li><a href="monitoring.html" class="active">Dashboard</a></li>
+                <li><a href="monitoring.html">Dashboard</a></li>
                 <li><a href="reporting.html">Report</a></li>
                 <!-- <li><a href="attendance.html">Attendance</a></li> -->
                 <li><a href="marketplace.html">Store</a></li>
@@ -295,6 +277,27 @@
 
         <div class="dashboard-grid">
             <div class="dashboard-card">
+                <h2>Waste Collection Trends</h2>
+                <div class="chart-container">
+                    <canvas id="wasteCollectionChart"></canvas>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h2>Community Participation</h2>
+                <div class="chart-container">
+                    <canvas id="participationChart"></canvas>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h2>Waste Composition</h2>
+                <div class="chart-container">
+                    <canvas id="wasteCompositionChart"></canvas>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
                 <h2>Key Statistics</h2>
                 <div class="stats-grid">
                     <div class="stat-item">
@@ -321,27 +324,6 @@
                 <div class="carbon-value">-2.5 tons</div>
                 <div class="carbon-label">CO2 Equivalent Reduced This Month</div>
                 <p>Great job! Our community efforts have reduced our carbon footprint.</p>
-            </div>
-
-            <div class="dashboard-card">
-                <h2>Waste Collection Trends</h2>
-                <div class="chart-container">
-                    <canvas id="wasteCollectionChart"></canvas>
-                </div>
-            </div>
-
-            <div class="dashboard-card">
-                <h2>Community Participation</h2>
-                <div class="chart-container">
-                    <canvas id="participationChart"></canvas>
-                </div>
-            </div>
-
-            <div class="dashboard-card">
-                <h2>Waste Composition</h2>
-                <div class="chart-container">
-                    <canvas id="wasteCompositionChart"></canvas>
-                </div>
             </div>
         </div>
     </main>

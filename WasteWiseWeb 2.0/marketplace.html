@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WasteWiseWeb - Community Monitoring</title>
+    <title>WasteWiseWeb - Community Waste Management Marketplace</title>
     <link rel="icon" type="image/x-icon" href="web.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&family=Roboto+Slab&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <style>
         :root {
             --primary: #4CAF50;
@@ -80,99 +79,113 @@
             color: var(--accent);
         }
 
-        .nav-links .active {
-            color: var(--accent);
-            font-weight: bold;
-            border-bottom: 3px solid var(--accent);
-        }
-
         /* Main Content */
         main {
-            padding: 2rem 0;
+            padding: 4rem 0;
         }
 
         h1 {
             text-align: center;
             margin-bottom: 2rem;
+            color: var(--primary);
         }
 
-        /* Dashboard Grid */
-        /* Dashboard Grid */
-        .dashboard-grid {
+        .marketplace-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: 1fr 3fr;
             gap: 2rem;
         }
 
-        .dashboard-grid .dashboard-card:first-child {
-            grid-column: span 4; /* Make the first card (key statistics) span all 4 columns */
-        }
-
-        .dashboard-grid .dashboard-card:nth-child(2),
-        .dashboard-grid .dashboard-card:nth-child(3),
-        .dashboard-grid .dashboard-card:nth-child(4),
-        .dashboard-grid .dashboard-card:nth-child(5) {
-            grid-column: span 2; /* Make the first card (key statistics) span all 4 columns */
-        }
-
-        .dashboard-card {
-            background-color: #f9f9f9;
+        .filters, .product-grid {
+            background-color: #f4f4f4;
+            padding: 2rem;
             border-radius: 10px;
-            padding: 1.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .dashboard-card h2 {
+        h2 {
             margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        /* Charts */
-        .chart-container {
-            position: relative;
-            height: 300px;
-        }
-
-        /* Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-        }
-
-        .stat-item {
-            background-color: white;
-            border-radius: 5px;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
             color: var(--secondary);
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
+        /* Filter Styles */
+        .filter-group {
+            margin-bottom: 1.5rem;
         }
 
-        /* Carbon Footprint Tracker */
-        .carbon-footprint-tracker {
-            text-align: center;
+        .filter-group h3 {
+            margin-bottom: 0.5rem;
         }
 
-        .carbon-value {
-            font-size: 3rem;
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-option {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Product Grid Styles */
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 150px;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-title {
             font-weight: bold;
-            color: var(--primary);
-            margin: 1rem 0;
+            margin-bottom: 0.5rem;
         }
 
-        .carbon-label {
-            font-size: 1.2rem;
+        .product-price {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .product-seller {
+            font-size: 0.9em;
             color: #666;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--accent);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e6ac00;
         }
 
         /* Footer */
@@ -181,7 +194,6 @@
             color: white;
             padding: 2rem 0;
             text-align: center;
-            margin-top: 2rem;
         }
 
         .social-links {
@@ -205,7 +217,7 @@
                 display: none;
             }
 
-            .stats-grid {
+            .marketplace-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -257,6 +269,7 @@
                 display: inline-block; /* Show open button on smaller screens */
             }
         }
+
     </style>
 </head>
 <body>
@@ -267,7 +280,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="educational-hub.html">Learn</a></li>
                 <li><a href="scheduling.html">Events</a></li>
-                <li><a href="monitoring.html" class="active">Dashboard</a></li>
+                <li><a href="monitoring.html">Dashboard</a></li>
                 <li><a href="reporting.html">Report</a></li>
                 <!-- <li><a href="attendance.html">Attendance</a></li> -->
                 <li><a href="marketplace.html">Store</a></li>
@@ -290,58 +303,46 @@
         </nav>
     </header>
 
-    <main class="container">
-        <h1>Community Monitoring Dashboard</h1>
-
-        <div class="dashboard-grid">
-            <div class="dashboard-card">
-                <h2>Key Statistics</h2>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-value">1,250 kg</div>
-                        <div class="stat-label">Total Waste Collected This Month</div>
+    <main>
+        <div class="container">
+            <h1>WasteWiseWeb Marketplace</h1>
+            <div class="marketplace-grid">
+                <section class="filters">
+                    <h2>Filters</h2>
+                    <div class="filter-group">
+                        <h3>Category</h3>
+                        <div class="filter-options">
+                            <label class="filter-option"><input type="checkbox"> Recycled Crafts</label>
+                            <label class="filter-option"><input type="checkbox"> Eco-friendly Products</label>
+                            <label class="filter-option"><input type="checkbox"> Waste Management Supplies</label>
+                            <label class="filter-option"><input type="checkbox"> Upcycled Furniture</label>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value">85%</div>
-                        <div class="stat-label">Recycling Rate</div>
+                    <div class="filter-group">
+                        <h3>Price Range</h3>
+                        <div class="filter-options">
+                            <label class="filter-option"><input type="checkbox"> ₱0 - ₱25</label>
+                            <label class="filter-option"><input type="checkbox"> ₱25 - ₱50</label>
+                            <label class="filter-option"><input type="checkbox"> ₱50 - ₱100</label>
+                            <label class="filter-option"><input type="checkbox"> ₱100+</label>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value">320</div>
-                        <div class="stat-label">Active Participants</div>
+                    <div class="filter-group">
+                        <h3>Seller Rating</h3>
+                        <div class="filter-options">
+                            <label class="filter-option"><input type="checkbox"> 4+ Stars</label>
+                            <label class="filter-option"><input type="checkbox"> 3+ Stars</label>
+                            <label class="filter-option"><input type="checkbox"> 2+ Stars</label>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value">12</div>
-                        <div class="stat-label">Community Events This Month</div>
+                </section>
+
+                <section class="product-grid">
+                    <h2>Products</h2>
+                    <div id="productList" class="product-list">
+                        <!-- Product cards will be added here dynamically -->
                     </div>
-                </div>
-            </div>
-
-            <div class="dashboard-card carbon-footprint-tracker">
-                <h2>Community Carbon Footprint</h2>
-                <div class="carbon-value">-2.5 tons</div>
-                <div class="carbon-label">CO2 Equivalent Reduced This Month</div>
-                <p>Great job! Our community efforts have reduced our carbon footprint.</p>
-            </div>
-
-            <div class="dashboard-card">
-                <h2>Waste Collection Trends</h2>
-                <div class="chart-container">
-                    <canvas id="wasteCollectionChart"></canvas>
-                </div>
-            </div>
-
-            <div class="dashboard-card">
-                <h2>Community Participation</h2>
-                <div class="chart-container">
-                    <canvas id="participationChart"></canvas>
-                </div>
-            </div>
-
-            <div class="dashboard-card">
-                <h2>Waste Composition</h2>
-                <div class="chart-container">
-                    <canvas id="wasteCompositionChart"></canvas>
-                </div>
+                </section>
             </div>
         </div>
     </main>
@@ -359,65 +360,33 @@
     </footer>
 
     <script>
-        // Waste Collection Trends Chart
-        const wasteCollectionCtx = document.getElementById('wasteCollectionChart').getContext('2d');
-        new Chart(wasteCollectionCtx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Waste Collected (kg)',
-                    data: [1000, 1200, 980, 1400, 1250, 1500],
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const productList = document.getElementById('productList');
+            const products = [
+                { title: 'Recycled Paper Notebook', price: 15.99, seller: 'EcoStore', category: 'Recycled Crafts', img: 'Recycled Paper Notebook.jpg' },
+                { title: 'Bamboo Toothbrush Set', price: 12.99, seller: 'GreenLiving', category: 'Eco-friendly Products', img: 'Bamboo Toothbrush Set.jpg' },
+                { title: 'Upcycled Tire Planter', price: 29.99, seller: 'UrbanGarden', category: 'Upcycled Furniture', img: 'Upcycled Tire Planter.jpg' },
+                { title: 'Reusable Produce Bags', price: 9.99, seller: 'ZeroWaste', category: 'Waste Management Supplies', img: 'Reusable Produce Bags.jpg' },
+                { title: 'Solar-powered Lantern', price: 34.99, seller: 'EcoTech', category: 'Eco-friendly Products', img: 'Solar-powered Lantern.jpg' },
+                { title: 'Recycled Plastic Outdoor Rug', price: 79.99, seller: 'GreenHome', category: 'Recycled Crafts', img: 'Recycled Plastic Outdoor Rug.jpg' }
+            ];
 
-        // Community Participation Chart
-        const participationCtx = document.getElementById('participationChart').getContext('2d');
-        new Chart(participationCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                datasets: [{
-                    label: 'Participants',
-                    data: [250, 300, 280, 320],
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-
-        // Waste Composition Chart
-        const wasteCompositionCtx = document.getElementById('wasteCompositionChart').getContext('2d');
-        new Chart(wasteCompositionCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Organic', 'Plastic', 'Paper', 'Glass', 'Metal', 'Other'],
-                datasets: [{
-                    data: [30, 25, 20, 10, 10, 5],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(255, 159, 64, 0.8)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image" style=''>
+                        <img src='${product.img}'>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.title}</div>
+                        <div class="product-price">₱${product.price.toFixed(2)}</div>
+                        <div class="product-seller">${product.seller}</div>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                `;
+                productList.appendChild(productCard);
+            });
         });
 
         function openNav() {
